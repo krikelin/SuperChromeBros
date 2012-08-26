@@ -127,6 +127,8 @@ function collision (body) {
 	// If left
 	var inVerticalRange = body.y < this.y   && body.y > this.y - body.height;
 	var inHorizontalRange = body.x > this.x - body.width && body.x < this.x + this.width;
+	var inVerticalRangeC = body.y < this.y - 10 && body.y > this.y - body.height + 10;
+	var inHorizontalRangeC = body.x > this.x - body.width + 10 && body.x < this.x + this.width - 10;
 	
 	var onLeft = body.x > this.x - body.width && body.x < this.x + this.width /2;
 	var onRight = body.x < this.x + this.width && body.x > this.x + this.width /2;
@@ -153,7 +155,7 @@ function collision (body) {
 	}
 	if(body.move_y < 0 ) {
 		
-		if((onTop || body.onGround) && inHorizontalRange) {
+		if((onTop || body.onGround) && inHorizontalRangeC) {
 			
 			this.type.onCollision(body, COLLISION_FROM_ABOVE);
 			body.move_y = 0.1;
@@ -165,7 +167,7 @@ function collision (body) {
 	}
 	if(body.move_y > 0 ) {
 		
-		if(onBottom && inHorizontalRange) {
+		if(onBottom && inHorizontalRangeC) {
 			this.type.onCollision(body, COLLISION_FROM_BELOW);
 			body.move_y = -2;
 			return  COLLISION_FROM_BELOW;
