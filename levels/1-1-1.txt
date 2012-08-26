@@ -1,15 +1,13 @@
 {
-	"background":"rgb(107, 140, 255)",	
-	"width":15,
-	"height":15,
+	"background":"rgb(0, 0, 0)",
+	"palette":"overworld",
 	"departures":[
 		{
-			"level":"levels/1-1-cave.json",
+			"target":"1-1-cave.json",
 			"x":1,
 			"y":1
 		}
 	],
-	"palette":"overworld",
 	"start":{
 		"x":2,
 		"y":21

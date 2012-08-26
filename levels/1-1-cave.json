@@ -1,0 +1,35 @@
+{
+	"background":"rgb(0, 0, 0)",
+	"palette":"overworld",
+	"width":15,
+	"height":15,
+	"start":{
+		"x":2,
+		"y":14
+	},
+	"blocks":[
+		{
+			"x":0,
+			"y":0,
+			"z":0,
+			"repeat":{
+				"x":10,
+				"y":1,
+				"z":1
+			},
+			"type":1
+		},
+		{
+			"x":0,
+			"y":1,
+			"z":0,
+			"repeat":{
+				"x":1,
+				"y":15,
+				"z":1
+			},
+			"type":3
+		}
+	]
+			
+}
