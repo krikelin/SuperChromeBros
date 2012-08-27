@@ -1,0 +1,50 @@
+ <html>
+<head>
+<title>Gamepad</title>
+</head>
+<body>
+<script type="text/javascript">
+(function () {
+	var j;
+
+	function tablefy(arr) {
+		var columns = '';
+		return (
+			'<table border="1"><tr>' +
+			arr.map(function (val, key) {
+				columns += '<td>' + val + '</td>';
+				return '<th>' + key + '</th>';
+			}).join('') +
+			'</tr><tr><tr>' + columns + '</tr></table>'
+		);
+	}
+
+	function printGamepad(gamepadIndex, container) {
+		var output, gamepad = navigator.webkitGamepads[gamepadIndex];
+		if (!gamepad) {
+			return;
+		}
+
+		output = '<h1>Gamepad #' + gamepadIndex + '</h1>';
+		output += '<h1>Axes</h1>' + tablefy(gamepad.axes);
+		output += '<h1>Buttons</h1>' + tablefy(gamepad.buttons);
+
+		container.innerHTML = output;
+
+		setTimeout(printGamepad, 50, gamepadIndex, container);
+	}
+
+	for (j = 0; j < navigator.webkitGamepads.length; j += 1) {
+		if (navigator.webkitGamepads[j]) {
+			(function (j) {
+				var container = document.createElement('div');
+				container.id = 'gamepad-info-' + j;
+				document.body.appendChild(container);
+				printGamepad(j, container);
+			}(j));
+		}
+	}
+}());
+</script>
+</body>
+</html>
