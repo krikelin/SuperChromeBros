@@ -1,6 +1,7 @@
 var points = 0;
 var lives = 3;
 var coins = 0;
+var BASE_URL = "file:///D:/Users/drsou_000/Documents/SuperChromeBros/";
 function updateHeader() {
 	addOrEditTextOverlay("toptext", "Level: 1-1 Coins:" + coins + " Life: " + lives + " Points: " + points, 2, 2);
 }
@@ -17,7 +18,7 @@ window.requestAnimFrame = (function(callback){
 function CoinBlockType (level) {
 	this.child = null;
 	this.material = new THREE.MeshLambertMaterial({
-		map: THREE.ImageUtils.loadTexture("img/" + level.palette + "/coin.png")
+		map: THREE.ImageUtils.loadTexture(BASE_URL + "img/" + level.palette + "/coin.png")
 	});
 	
 	this.solid = false;
@@ -28,15 +29,16 @@ function CoinBlockType (level) {
 	this.y = 0;
 	this.z = 0;
 	/***
-	@function onCollision
+	onCollision
+	@function
 	***/
 	this.onCollision = function (body, direction) {
 		currentLevel.scene.remove(this.child.cube);
 		this.child.gone = true;
-		console.log("A");
+		// console.log("A");
 		
 		coins++;
-		console.log("coins", coins);
+		// console.log("coins", coins);
 		if(coins > 99) {
 			lives++;
 			coinS = 0;
@@ -53,7 +55,7 @@ function CoinBlockType (level) {
 function PipeURightBlockType(level) {
 	this.child = null;
 	this.material = new THREE.MeshLambertMaterial({
-		map: THREE.ImageUtils.loadTexture("img/" + level.palette + "/pipe_right.png")
+		map: THREE.ImageUtils.loadTexture(BASE_URL + "img/" + level.palette + "/pipe_right.png")
 	});
 	this.solid = true;
 	this.width = 50;
@@ -79,12 +81,12 @@ function PipeULeftBlockType(level) {
 	this.child = null;
 	this.solid = true;
 	this.material = new THREE.MeshLambertMaterial({
-		map: THREE.ImageUtils.loadTexture("img/" + level.palette + "/pipe_left.png")
+		map: THREE.ImageUtils.loadTexture(BASE_URL + "img/" + level.palette + "/pipe_left.png")
 	});
 	this.width = 50;
 	this.height = 100;
 	this.depth = 50;
-	this.x = 0;
+	this.x = -10;
 	this.y = 0;
 	this.z = 0;
 	/***
@@ -103,32 +105,7 @@ function PipeULeftBlockType(level) {
 function PipeLeftBlockType(level) {
 	this.child = null;
 	this.material = new THREE.MeshLambertMaterial({
-		map: THREE.ImageUtils.loadTexture("img/" + level.palette + "/pipe_left.png")
-	});
-	this.width = 40;
-	this.height = 100;
-	this.depth = 50;
-	this.x = 5;
-	this.y = 0;
-	this.z = 0;
-	/***
-	@function onCollision
-	***/
-	this.onCollision = function (body, direction) {
-		
-	};
-	this.create = function () {
-		var cube = new THREE.Mesh(new THREE.CubeGeometry(40, 50, 10), this.material);
-		cube.overdraw = true;
-		return cube;
-	};
-	this.solid = true;
-	this.cube = this.create();
-}
-function PipeRightBlockType(level) {
-	this.child = null;
-	this.material = new THREE.MeshLambertMaterial({
-		map: THREE.ImageUtils.loadTexture("img/" + level.palette + "/pipe_right.png")
+		map: THREE.ImageUtils.loadTexture(BASE_URL + "img/" + level.palette + "/pipe_left.png")
 	});
 	this.width = 40;
 	this.height = 100;
@@ -143,7 +120,32 @@ function PipeRightBlockType(level) {
 		
 	};
 	this.create = function () {
-		var cube = new THREE.Mesh(new THREE.CubeGeometry(40, 50, 10), this.material);
+		var cube = new THREE.Mesh(new THREE.CubeGeometry(50, 50, 10), this.material);
+		cube.overdraw = true;
+		return cube;
+	};
+	this.solid = true;
+	this.cube = this.create();
+}
+function PipeRightBlockType(level) {
+	this.child = null;
+	this.material = new THREE.MeshLambertMaterial({
+		map: THREE.ImageUtils.loadTexture(BASE_URL + "img/" + level.palette + "/pipe_right.png")
+	});
+	this.width = 40;
+	this.height = 100;
+	this.depth = 50;
+	this.x = 0;
+	this.y = 0;
+	this.z = 0;
+	/***
+	@function onCollision
+	***/
+	this.onCollision = function (body, direction) {
+		
+	};
+	this.create = function () {
+		var cube = new THREE.Mesh(new THREE.CubeGeometry(40, 50, 10), this.material)
 		cube.overdraw = true;
 		return cube;
 	};
@@ -164,7 +166,7 @@ function TegelBlockType(level) {
 	this.y = 0;
 	this.z = 0;
 	this.material = new THREE.MeshLambertMaterial({
-		map: THREE.ImageUtils.loadTexture("img/" + level.palette + "/tegel.png")
+		map: THREE.ImageUtils.loadTexture(BASE_URL + "img/" + level.palette + "/tegel.png")
 	});
 	/***
 	@function onCollision
@@ -172,8 +174,8 @@ function TegelBlockType(level) {
 	this.onCollision = function (body, direction) {
 		if(direction == COLLISION_FROM_BELOW) {
 			if(currentLevel.player.move_y > 0) {
-			// console.log(scene);
-			// console.log(body);
+			// // console.log(scene);
+			// // console.log(body);
 				currentLevel.scene.remove(this.child.cube);
 				
 				this.child.gone = true;
@@ -197,7 +199,7 @@ function OutDoorBlockType(level) {
 	this.z = -2;
 	this.solid = false;
 	this.material = new THREE.MeshLambertMaterial({
-		map: THREE.ImageUtils.loadTexture("img/" + level.palette + "/door_out.png")
+		map: THREE.ImageUtils.loadTexture(BASE_URL + "img/" + level.palette + "/door_out.png")
 	});
 	/***
 	@function onCollision
@@ -205,7 +207,7 @@ function OutDoorBlockType(level) {
 	this.onCollision = function (body, direction) {
 	};
 	this.create = function () {
-		var cube = new THREE.Mesh(new THREE.CubeGeometry(50, 50, 10), this.material);
+		var cube = new THREE.Mesh(new THREE.CubeGeometry(50, 50, 10), this.material)
 		cube.overdraw = true;
 		return cube;
 	};
@@ -221,7 +223,7 @@ function InDoorBlockType(level) {
 	this.solid = false;
 	this.z = -2;
 	this.material = new THREE.MeshLambertMaterial({
-		map: THREE.ImageUtils.loadTexture("img/" + level.palette + "/door_in.png")
+		map: THREE.ImageUtils.loadTexture(BASE_URL + "img/" + level.palette + "/door_in.png")
 	});
 	/***
 	@function onCollision
@@ -229,7 +231,7 @@ function InDoorBlockType(level) {
 	this.onCollision = function (body, direction) {
 	};
 	this.create = function () {
-		var cube = new THREE.Mesh(new THREE.CubeGeometry(50, 50, 10), this.material);
+		var cube = new THREE.Mesh(new THREE.CubeGeometry(50, 50, 10), this.material)
 		cube.overdraw = true;
 		return cube;
 	};
@@ -245,7 +247,7 @@ function LightBlockType(level) {
 	this.y = 0;
 	this.z = 0;
 	this.material = new THREE.MeshLambertMaterial({
-		map: THREE.ImageUtils.loadTexture("img/" + level.palette + "/lightbox.png")
+		map: THREE.ImageUtils.loadTexture(BASE_URL + "img/" + level.palette + "/lightbox.png")
 	});
 	/***
 	@function onCollision
@@ -253,7 +255,7 @@ function LightBlockType(level) {
 	this.onCollision = function (body, direction) {
 	};
 	this.create = function () {
-		var cube = new THREE.Mesh(new THREE.CubeGeometry(50, 50, 50), this.material);
+		var cube = new THREE.Mesh(new THREE.CubeGeometry(50, 50, 50), this.material)
 		cube.overdraw = true;
 		return cube;
 	};
@@ -269,12 +271,12 @@ function StoneBlockType(level) {
 	this.z = 0;
 	this.solid = true;
 	this.material = new THREE.MeshLambertMaterial({
-		map: THREE.ImageUtils.loadTexture("img/" + level.palette + "/stone.png")
+		map: THREE.ImageUtils.loadTexture(BASE_URL + "img/" + level.palette + "/stone.png")
 	});
 	this.onCollision = function (body, direction) {
 	};
 	this.create = function () {
-		var cube = new THREE.Mesh(new THREE.CubeGeometry(50, 50, 50), this.material);
+		var cube = new THREE.Mesh(new THREE.CubeGeometry(50, 50, 50), this.material)
 		cube.overdraw = true;
 		return cube;
 	};
@@ -289,7 +291,7 @@ function GroundBlockType(level) {
 	this.y = 0;
 	this.z = 0;
 	this.material = new THREE.MeshLambertMaterial({
-		map: THREE.ImageUtils.loadTexture("img/" + level.palette + "/ground.png")
+		map: THREE.ImageUtils.loadTexture(BASE_URL + "img/" + level.palette + "/ground.png")
 	});
 	this.onCollision = function (body, direction) {
 	
@@ -433,7 +435,7 @@ function Block(level, x, y, z, type) {
 
 	this.type.child = this;
 	
-	// // console.log(this.cube);
+	// // // console.log(this.cube);
 	this.gone = false;
 	this.x = x;
 	this.y = y;
@@ -455,17 +457,17 @@ function Block(level, x, y, z, type) {
 }
 function gamepadConnected(evt)
 {
-  // // console.log(evt); 
+  // // // console.log(evt); 
 }
 function moveAnalogSticks(evt) {
-	// // console.log(evt.axis, evt.value);
+	// // // console.log(evt.axis, evt.value);
 }
 var jump = false;
 window.addEventListener("MozGamepadAxisMove", moveAnalogSticks);
 window.addEventListener('gamepadConnected', gamepadConnected);
 window.addEventListener("scroll", function (e) {
 
-	// console.log(e);
+	// // console.log(e);
 });
 window.onkeyup = function (e) {
 
@@ -498,7 +500,7 @@ window.onkeyup = function (e) {
 	if(e.keyIdentifier == "U+0020") {
 	//	if(player.onGround) 
 		{
-			//alert("A");
+			//// alertt("A");
 			
 			
 			
@@ -506,7 +508,7 @@ window.onkeyup = function (e) {
 	}
 };
 window.onkeydown = function (e) {
-	// // console.log(e);
+	// // // console.log(e);
 	if(e.keyIdentifier == "Left") {
 		if(currentLevel.player.move_x > -5) {
 			currentLevel.player.move_x -= 0.5;
@@ -517,14 +519,18 @@ window.onkeydown = function (e) {
 	//	player.move_z = -5;
 		for(var i = 0; i < currentLevel.departures.length; i++) {
 			var departure = currentLevel.departures[i];
-			console.log(departure);
+			// console.log(departure);
 			if(
 			currentLevel.player.x > departure.x * 50 - currentLevel.player.width &&
 			currentLevel.player.x < departure.x * 50 + 50 && 
 			currentLevel.player.y < departure.y * 50 + currentLevel.player.y &&
 			currentLevel.player.y > departure.y * 50 - 50/2
 			) {
-				loadLevel(departure.target.level, departure.target.x, departure.target.y);
+				if(departure.target.level.indexOf('javascript:') == '0') {
+					self.location = departure.target.level;
+					return;
+				}
+				load_level(departure.target.level, departure.target.x, departure.target.y);
 			}
 		}
 	} 
@@ -532,14 +538,19 @@ window.onkeydown = function (e) {
 	//	player.move_z = 5;
 		for(var i = 0; i < currentLevel.departures.length; i++) {
 			var departure = currentLevel.departures[i];
-			console.log(departure);
+			// console.log(departure);
 			if(
 			currentLevel.player.x > departure.x * 50 - currentLevel.player.width &&
 			currentLevel.player.x < departure.x * 50 + 50 && 
 			currentLevel.player.y < departure.y * 50 + currentLevel.player.y &&
 			currentLevel.player.y > departure.y * 50 - 50/2
+			
 			) {
-				loadLevel(departure.target.level, departure.target.x, departure.target.y);
+				if(departure.target.level.indexOf('javascript:') == '0') {
+					self.location = departure.target.level;
+					return;
+				}
+				load_level(departure.target.level, departure.target.x, departure.target.y);
 			}
 		}
 	} 
@@ -619,16 +630,16 @@ function Enemy () {
 	Play actions
 	**/
 	this.play = function () {
-		//// console.log("A", this.onGround);
+		//// // console.log("A", this.onGround);
 		
 		if(!self.onGround && !jump) 
 		{
 		
 			this.move_y -= 0.1;
-			// // console.log(this.move_y);
+			// // // console.log(this.move_y);
 		} else {
 			
-			//alert("C");
+			//// alertt("C");
 			
 		}
 		if(jump) {
@@ -658,6 +669,28 @@ function Enemy () {
 	};
 	
 	var self = this;
+}
+window.onhashchange = function () {
+	var dividers = location.hash.split('/');
+	console.log(dividers);
+	switch(dividers[1]) {
+		case "level":
+			var level = decodeURIComponent(dividers[2]);
+			loadLevel(level, 0, 10);
+			break;
+	}
+};
+/**
+Loads a level
+@function
+**/
+function load_level(url, x, y) {
+	var newLocation =  '#!/level/' + encodeURIComponent(url);
+	if(typeof(x) !== "undefined" && typeof(y) !== "undefined") {
+		newLocation += '/' +	 x + ',' + y;
+	}
+	console.log(newLocation);
+	self.location = newLocation;
 }
 var walking = false;
 /**
@@ -721,16 +754,16 @@ function MarioBody() {
 	Play actions
 	**/
 	this.play = function () {
-		//// console.log("A", this.onGround);
+		//// // console.log("A", this.onGround);
 			
 		if(!self.onGround && !jump) 
 		{
 		
 			this.move_y -= 0.1;
-			// // console.log(this.move_y);
+			// // // console.log(this.move_y);
 		} else {
 			
-			//alert("C");
+			//// alertt("C");
 			
 		}
 		if(jump) {
@@ -771,20 +804,30 @@ function MarioBody() {
 			}
 			
 			currentLevel.camera.position.x = this.camera_x;
-		currentLevel.camera.position.y = this.camera_y;
+		currentLevel.camera.position.y = window.innerHeight /2 + 50;
 		}
 		
-		
-		//// console.log(camera_z);
+		//// // console.log(camera_z);
 	};
 	var self = this;
 }
+var CURRENT_DOMAIN = "http";
 /***
 @class Level
 @description Creates a new level
 @param url The url to the level file
 ***/
-function Level(url, dest_x, dest_y) {
+function Level(url, dest_x, dest_y, t) {
+	if(url.indexOf('javascript:') == 0) {
+		self.location = url;
+		return;
+	}
+	if(url.indexOf(CURRENT_DOMAIN) != 0)	 {
+
+		CURRENT_DOMAIN = url;
+		console.log("set current domain to", CURRENT_DOMAIN);
+	}
+	t = typeof(t) === "undefined" ? false : t;
 	this.url = url;
 	this.start_x = 0;
 	this.start_y = 0;
@@ -793,14 +836,14 @@ function Level(url, dest_x, dest_y) {
 	this.scene = new THREE.Scene();
 	this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 11000);
 	this.camera.position.z = 1200;
-	this.camera.position.y = 202;
+	this.camera.position.y = 50;
 	this.camera.rotation.y = -.0;
 	this.player = null;
 	// scene
 	
 	// material 
 	this.mario = new MarioBody();
-//	alert(mario);
+//	// alertt(mario);
 	this.player = this.mario;
 	this.mario.play();
 	this.scene.add(this.mario.mario);
@@ -808,7 +851,7 @@ function Level(url, dest_x, dest_y) {
 	this.parseBlock = function (_block, type) {
 		var type_id = _block.type;
 		var left = _block.x;
-		console.log(_block);
+		// console.log(_block);
 		var top = _block.y;
 		var zz = _block.z ;
 		var repeat = _block.repeat;
@@ -819,11 +862,11 @@ function Level(url, dest_x, dest_y) {
 		// Choose type
 		if(type_id > 0) {
 			
-			//// console.log(repeat);
+			//// // console.log(repeat);
 			for(var x = 0; x < repeat.x; x++) {
 				for(var y = 0; y < repeat.y; y++) {
 					for(var z = 0; z < repeat.z; z++) {
-						// console.log("GF");
+						// // console.log("GF");
 						var type = null;
 						
 						switch(type_id) {
@@ -861,7 +904,7 @@ function Level(url, dest_x, dest_y) {
 								type = new CoinBlockType(level);
 								break;
 						}
-						console.log(x);
+						// console.log(x);
 						var block = new Block(level, (left + x) * 50 + type.x, (top + y) * 50 + type.y, (zz + z) * 50 + type.z,  type);
 						
 						this.blocks.push(block);
@@ -905,7 +948,7 @@ function Level(url, dest_x, dest_y) {
 				type = new CoinBlockType(level);
 				break;
 		}
-		console.log(x);
+		// console.log(x);
 		var block = new Block(level, (left ) * 50 + type.x, (top ) * 50 + type.y, (zz) * 50 + type.z,  type);
 		
 		return (block);
@@ -943,15 +986,249 @@ function Level(url, dest_x, dest_y) {
 	
 	var self = this;
 	var xmlHttp = new XMLHttpRequest();
-	
-	xmlHttp.open("GET", url+"?c="+Math.random(), false);
+	loadTileSet("levels/tileset.json");
+	console.log("LOADING", url);
+	xmlHttp.open("GET", url + ( t ? "?c="+Math.random() : ""), false);
 	xmlHttp.send();
 	this.blocks = [];
 	this.sprites = [];
 	this.departures = [];
-	// // console.log(xmlHttp);
-	var level = eval("(" + xmlHttp.responseText + ")");
-	console.log("level", level);
+	// console.log(xmlHttp);
+	// console.log(level);
+	var level = {};
+	console.log(xmlHttp.responseText);
+	if(url.indexOf(".json") == url.length - 5) {
+		level = eval("(" + xmlHttp.responseText + ")");
+	} else {
+		try {
+			var f = document.createElement("div");
+			// console.log(xmlHttp.responseText);
+			f.innerHTML = xmlHttp.responseText;
+			level = {
+				blocks: [],
+				departures: [], 
+				labels:[]
+			};
+			
+			d = f.querySelectorAll("a, span, p, img")
+
+			// console.log(d);
+			var plevel = 2;
+			var x = 0;
+			var curParent = f;
+			level.palette = "overworld";
+			level.start = {
+				x: 0,
+				y: 5,
+				z: 0
+			};
+		/*	*/
+			var prevElement = null;
+			var currentParent = null;
+			var currentParent = null;
+			var length = 10;
+			for(var i = 0; i < d.length && i < length; i++) {
+				var elm = d[i];
+				if(elm == null)
+					continue;
+				if(elm != null && elm.parentNode == prevElement) {
+					
+					
+					//alert("DC");
+					// console.log("A", plevel, "C");
+				}
+				if(prevElement != null && prevElement.parentNode == elm.previousSlibing) {
+				///	plevel = 0;
+					//x -= prevElement.parentNode.childNodes.length;
+					console.log("B", plevel, "c");
+				}
+				console.log(x);
+				// console.log("AAA", elm);
+				 console.log(elm.nodeName);
+				plevel = Math.round(Math.random()*5);
+				level.blocks.push({
+					x: x,
+					y: 0,
+					z: 0,
+					repeat: {
+						x: 5,
+						y: 1,
+						z: 1
+					},
+					type: 1
+				});
+				switch(elm.nodeName) {
+					
+					case "img":
+						level.blocks.push({
+							x: x,
+							y: plevel,
+							type: 3,
+							repeat: {
+								x: 1,
+								y: 1,
+								z: 1
+							}
+						});
+						
+						break;
+					case "A":
+						if((!elm.hasAttribute("href")) || elm.textContent === '' || elm.textContent == null || typeof(elm.textContent) === "undefined") {
+				//			 alert("A");
+							continue;
+						}
+						// alertt(elm.textContent);
+						
+						// // 	;
+						if(elm.textContent !== "" && elm.textContent != null && typeof(elm.textContent) !== "undefined") {
+							
+							level.blocks.push({
+								type: "Pipe1",
+								x: x,
+								y: plevel,
+								z: 0
+							});
+							if(true) {
+								level.blocks.push({
+									x: x,
+									y: plevel,
+									z: 0,
+									type: 2,
+									repeat: {
+										x: 2,
+										y: 1,
+										z: 1
+									}
+								});
+							}
+						} else {
+							continue;
+						}
+
+							level.departures.push({
+								target: {
+									level: elm.getAttribute('href').indexOf('http') == -1 ? CURRENT_DOMAIN + elm.getAttribute('href') : elm.getAttribute('href'),
+									x: 0,
+									y: 5
+								},
+								x: x,
+								y: plevel,
+								z: 0
+							});
+						console.log(elm.getAttribute("href"));
+
+						console.log(elm.nodeName, elm.textContent);
+						try {
+							var label = {
+								x: x,
+								y: 15,
+								text: elm.textContent
+							};
+
+							level.labels.push(label);
+							
+						//	console.log(label);
+						} catch (e) {
+						}
+						// console.log("LEVEL", level);
+						x += 8;
+						break;
+
+					case "DIV":
+					/*	level.blocks.push({
+							type: 2,
+							x: x,
+							y: plevel,
+							z: 0,
+							repeat: {
+								x: 2,
+								y: 3,
+								z: 1
+							}
+						});*/
+						//x += 4;
+						break;
+					case "P":
+					case "SPAN":
+						var currentChar = '\0';
+						for(var i = 0; i < Math.round(elm.textContent.length -1 / 4); i++) {
+							currentChar = elm.textContent[i*4];
+							switch(currentChar) {
+								case 'a':
+								case 'b':
+								case 'c':
+									level.blocks.push({
+										type: 10,
+										x: x,
+										y: plevel + 5,
+										z: 0,
+										repeat: {
+											x: 2,
+											y: 4,
+											z: 1
+										}
+									});
+									break;
+								case 'd':
+								case 'e':
+								case 'f':
+									level.blocks.push({
+										type: 4,
+										x: x,
+										y: plevel + 5,
+										repeat: {
+											x: 3,
+											y: 1,
+											z: 1
+										}
+									});
+									break;
+							}
+							x += 2 + 2;
+						}
+						break;
+					/*case "SPAN":
+						level.blocks.push({
+							type: 10,
+							x: x,
+							y: Math.round(5 * Math.random()),
+							z: 0,
+							repeat: {
+								x: 2,
+								y: 4,
+								z: 1
+							}
+						})
+						x += 2 + 2;
+						break;*/
+						default:
+						//	length++;
+							break;
+				
+				}
+			/*	level.blocks.push({
+					type: 1,
+					x: x,
+					y: plevel - 1,
+					z: 0,
+					repeat: {
+						x: elm.childNodes.length,
+						y: 1,
+						z: 1
+					}
+				})*/
+				
+
+				prevElement = elm;
+			}
+			console.log(level);
+		} catch (e) {
+		// alertt(e.stack);
+			// console.log(e.stack);
+			throw e;
+		}
+
+	}
 	document.body.style.background = level.background;
 	this.start_x = level.start.x * 50;
 	
@@ -965,65 +1242,83 @@ function Level(url, dest_x, dest_y) {
 	
 	this.width = level.width * 50;
 	this.height = level.height * 50;
-	console.log("start", this.start_y);
+	// console.log("start", this.start_y);
 	this.palette = level.palette;
 	if(typeof(level.departures) !== "undefined") {
-		console.log("Found departures");
+		// console.log("Found departures");
 		for(var i = 0; i < level.departures.length; i++) {
 			this.departures.push(level.departures[i]);
-			console.log("A");
+			// console.log("A");
 		}
 	}
-	console.log(level.blocks);
+	// console.log(level.blocks);
 	for(var i = 0; i < level.blocks.length; i++) {
-		var _block = level.blocks[i];
-		console.log(_block);
-		if(isNaN(_block.type)) {
-			var type = tileset[_block.type];
-			for(var i =0 ; i <  type.length; i++) {
-				var block = type[i];
+		try {
+			var _block = level.blocks[i];
+			// console.log(_block);
+
+			
+			if(isNaN(_block.type)) {
+				//// alertt("A");
+				var type = tileset[_block.type];
+				for(var j =0 ; j <  type.length; j++) {
 				
-				block.x += _block.x;
-				block.y += _block.y;
-				block.z += _block.z;
-				this.blocks.push(this.parseBlock(block, type));
+					var tblock = type[j];
+					var block = {};
+					block.x = _block.x + tblock.x;
+					block.y = _block.y + tblock.y;
+					block.z = _block.z + tblock.z;
+					block.type = tblock.type;
+					// console.log("G", block.y);
+					// console.log("F", block.x);
+					this.blocks.push(this.parseBlock(block, type));
+					
+				}
 				
+			} else {
+				// console.log("FG");
+				// console.log("DATAT", i);
+				this.blocks.push(this.parseBlock(_block, _block.type));
 			}
-			continue;
-		} 
-		console.log("FG");
-		this.blocks.push(this.parseBlock(_block, _block.type));
-	
+		} catch (e) {	
+			// console.log(e.stack);
+		}
 		
 	}
 	if(typeof(level.labels) !== "undefined") {
-		for(var i = 0; i < level.labels.length; i++) {
-			var label = level.labels[i];
-			var text3d = new THREE.TextGeometry(label.text, {
-				size: 25,
-				height:10,
-				font: "helvetiker"
-			});
-			text3d.computeBoundingBox();
-			var textMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, overdraw: true } );
 		
-			var text = new THREE.Mesh( text3d, textMaterial);
-			text.position.x = label.x * 50;
-			text.position.y = label.y * 50;
-			text.depth = 1;
-			text.position.z = -50;
+			for(var i = 0; i < level.labels.length; i++) {
+				try {
+					var label = level.labels[i];
+					var text3d = new THREE.TextGeometry(label.text, {
+						size: 25,
+						height:1,
+						font: "helvetiker"
+					});
+					text3d.computeBoundingBox();
+					var textMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, overdraw: true } );
+				
+					var text = new THREE.Mesh( text3d, textMaterial);
+					text.position.x = label.x * 50;
+					text.position.y = label.y * 50;
+					text.depth = 1;
+					text.position.z = -50;
 
-			text.rotation.x = 0;
-			text.rotation.y = 0;
-			var parent = new THREE.Object3D();
-			this.scene.add( text );
-		}
+					text.rotation.x = 0;
+					text.rotation.y = 0;
+					var parent = new THREE.Object3D();
+				this.scene.add( text );
+				} catch (e) {
+					
+				}
+			}
+		
 	}
 	if(false) {
 		this.width = level.split(/\n/g)[0].length; // width;
 	
 		this.height = level.split(/\n/g).length -1;
-		// // console.log(this);
+		// // // console.log(this);
 		this.blocks = [];
 		var n = 0;
 		for(var y = 0; y < this.height; y++) {
@@ -1034,11 +1329,11 @@ function Level(url, dest_x, dest_y) {
 				var type_id = parseInt(b);
 				var top = /*50 * this.height -*/ y * 50;
 				var left = (x - (y+1)) * 50;
-				// // console.log("F");
+				// // // console.log("F");
 				if(b == "P") { // If player	
-					// // console.log("DADAA");
+					// // // console.log("DADAA");
 					player.x = x;
-					// // console.log(y);
+					// // // console.log(y);
 					player.y = y * 50;
 				}
 				
@@ -1048,8 +1343,8 @@ function Level(url, dest_x, dest_y) {
 	this.activate = function () {
 		currentLevel = this;
 		for(var i = 0; i < this.blocks.length; i++) {
-			// console.log("F");
-			 // console.log(block);
+			// // console.log("F");
+			 // // console.log(block);
 			var block = this.blocks[i];
 			this.scene.add(block.cube);
 		}
@@ -1057,15 +1352,16 @@ function Level(url, dest_x, dest_y) {
 		this.player.y = this.start_y;
 		this.player.set_camera();
 		
-		// alert("A");
+		// // alertt("A");
 	};
+	 
 }
 var dragging = false;
 var middle = window.innerWidth /2;
 var diff = 0;
 document.onmousedown = function (e) {
 	dragging = true;
-	// console.log(middle);
+	// // console.log(middle);
 	diff = middle - e.x;
 	prevY = -(e.y - window.innerHeight);
 	
@@ -1086,17 +1382,17 @@ window.onmousemove = function (e) {
 	
 	/*if(dragging) 
 	{
-		// // console.log("dragging");
+		// // // console.log("dragging");
 	
-		// // console.log(e);
+		// // // console.log(e);
 		var width = window.innerWidth;
 		var height = window.innerHeight;
 		
 		angle = ((e.x + diff) / width) ;
 
-	// console.log("middle", diff, e.x + diff,angle);
+	// // console.log("middle", diff, e.x + diff,angle);
 	angle *=0.9;
-		// // console.log(angle);
+		// // // console.log(angle);
 		camera.rotation.y = angle;
 	}*/
 	/*if(e.y < window.innerHeight /1.25 ) {
@@ -1138,7 +1434,7 @@ function animate(lastTime){
 	});
 }
 function gameTick () {
-	//// console.log("F");
+	//// // console.log("F");
 	var a = (currentLevel.player.onGround + " a");
 	currentLevel.foundGround = false;
 	currentLevel.player.set_camera();
@@ -1150,11 +1446,11 @@ function gameTick () {
 	
 	}
 	currentLevel.player.onGround = currentLevel.foundGround;
-	// console.log("D", player.onGround);
+	// // console.log("D", player.onGround);
 	var a = (currentLevel.foundGround);
 	currentLevel.player.play();
 	var b = (currentLevel.foundGround);
-	// // console.log(a, b);
+	// // // console.log(a, b);
 	}
 var currentLevel = null;
 var renderer = null;
@@ -1171,7 +1467,7 @@ function addOrEditTextOverlay(id, text, left, top) {
 		txt.setAttribute("style", "z-index: 12; font-size:35px; font-family: Terminal; color: #FFFFFF; text-shadow: 1px 1px 0px #000000; position: absolute; left: " + left +"px; top: " + top + "px; width:70%; height:32px");
 		txt.innerHTML = text;
 		txt.setAttribute("id", "label_" + id);
-		console.log(txt);
+		// console.log(txt);
 		document.body.appendChild(txt);
 	} else {
 		txt.innerHTML = text;
@@ -1180,7 +1476,7 @@ function addOrEditTextOverlay(id, text, left, top) {
 function die() {
 	lives -= 1;
 	if(lives > -1) {
-		loadLevel(currentLevel.url);
+		loadLevel(currentLevel.url, 0, 5);
 		points = 0;
 		lives = 3;
 		coins = 0;
